@@ -25,7 +25,9 @@ async def on_ready():
 async def on_member_join(member):
 	
 	welcome_channel_object = bot.get_server(vortex_server_id).get_channel(welcome_channel_id)
+	rules_channel_object = bot.get_server(vortex_server_id).get_channel(rules_channel_id)
+	announcements_channel_object = bot.get_server(vortex_server_id).get_channel(announcements_channel_id)
 	
-	await bot.send_message(welcome_channel_object, "Hello {0}, welcome to **Vortex Drops**. Make sure to read <#460862584527126539> and <#460863779689857035>!".format(member.mention))
+	await bot.send_message(welcome_channel_object, "Hello {0}, welcome to **Vortex Drops**. Make sure to read {1} and {2}!".format(member.mention, rules_channel_object.mention, announcements_channel_object.mention))
 	
 bot.run(token)
