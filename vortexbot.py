@@ -8,7 +8,8 @@ token = str(os.environ.get("BOT_TOKEN"))
 vortex_server_id = str(os.environ.get("VORTEX_SERVER_ID"))
 
 welcome_channel_id = str(os.environ.get("WELCOME_CHANNEL_ID"))
-
+rules_channel_id = str(os.environ.get("RULES_CHANNEL_ID"))
+announcements_channel_id = str(os.environ.get("ANNOUNCEMENTS_CHANNEL_ID"))
 
 Client = discord.Client()
 bot = commands.Bot(command_prefix="!")
@@ -25,6 +26,6 @@ async def on_member_join(member):
 	
 	welcome_channel_object = bot.get_server(vortex_server_id).get_channel(welcome_channel_id)
 	
-	await bot.send_message(welcome_channel_object, "Hello {0}, welcome to **Vortex Drops**. Make sure to read #rules and #announcements!".format(member.mention))
+	await bot.send_message(welcome_channel_object, "Hello {0}, welcome to **Vortex Drops**. Make sure to read <#460862584527126539> and <#460863779689857035>!".format(member.mention))
 	
 bot.run(token)
