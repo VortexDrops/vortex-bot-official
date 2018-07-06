@@ -32,7 +32,7 @@ async def on_member_join(member):
 	
 @bot.event
 async def on_message(message):
-	if message.content == "sayhellobot":
-		await bot.send_message(message.channel, "Hello, I'm alive")
+	if message.content == "ping":
+		await bot.send_message(message.channel, "pong")
 	
 bot.run(token)
