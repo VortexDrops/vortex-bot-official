@@ -30,4 +30,9 @@ async def on_member_join(member):
 	
 	await bot.send_message(welcome_channel_object, "Hello {0}, welcome to **Vortex Drops**. Make sure to read {1} and {2}!".format(member.mention, rules_channel_object.mention, announcements_channel_object.mention))
 	
+@bot.event
+async def on_message(message):
+	if message.content == "sayhellobot":
+		await bot.send_message(message.channel, "Hello, I'm alive")
+	
 bot.run(token)
