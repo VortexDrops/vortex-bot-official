@@ -42,6 +42,7 @@ async def on_member_join(member):
 @bot.event
 async def on_message(message):
 	
+	global status_commands
 	global drop_active
 	global status_message_objects
 	
