@@ -13,6 +13,10 @@ announcements_channel_id = str(os.environ.get("ANNOUNCEMENTS_CHANNEL_ID"))
 commands_channel_id = str(os.environ.get("COMMANDS_CHANNEL_ID"))
 droplobby_channel_id = str(os.environ.get("DROPLOBBY_CHANNEL_ID"))
 
+status_commands = [
+"Lobby is over?", "still dropping?", "lobby lit?", "lobby active?", "Is there a lobby?", "is drop on?",
+"lobby still going?", "there a drop now?", "still drop?", "is there drop?", "is there a drop?", "drop lobby on?"
+]
 status_message_objects = []
 drop_active = False
 
