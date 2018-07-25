@@ -30,7 +30,7 @@ async def on_ready():
 	print (bot.user.name + " is ready")
 	print ("ID: " + bot.user.id)
 	
-	await bot.change_status("Drop Lobby Inactive", False)
+	#await bot.change_status("Drop Lobby Inactive", False)
 	
 @bot.event
 async def on_member_join(member):
