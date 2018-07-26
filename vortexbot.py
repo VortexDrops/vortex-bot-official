@@ -13,6 +13,9 @@ announcements_channel_id = str(os.environ.get("ANNOUNCEMENTS_CHANNEL_ID"))
 commands_channel_id = str(os.environ.get("COMMANDS_CHANNEL_ID"))
 droplobby_channel_id = str(os.environ.get("DROPLOBBY_CHANNEL_ID"))
 
+game_not_active_str = "Drop Lobby NOT ACTIVE"
+game_active_str = "Drop Lobby ACTIVE"
+
 status_commands = [
 "Lobby is over?", "still dropping?", "lobby lit?", "lobby active?", "Is there a lobby?", "is drop on?",
 "lobby still going?", "there a drop now?", "still drop?", "is there drop?", "is there a drop?", "drop lobby on?"
@@ -30,7 +33,7 @@ async def on_ready():
 	print (bot.user.name + " is ready")
 	print ("ID: " + bot.user.id)
 	
-	#await bot.change_status("Drop Lobby Inactive", False)
+	await bot.change_presence(game=discord.Game(name=game_not_active_str))
 	
 @bot.event
 async def on_member_join(member):
@@ -69,6 +72,8 @@ async def on_message(message):
 						embed.add_field(name="To Join: ", value="-Add my SocialClub: **VORTEXDP**", inline=False)
 						status_message_objects.append(await bot.send_message(droplobby_channel_object, embed=embed))
 						
+						await bot.change_presence(game=discord.Game(name=game_active_str))
+						
 						drop_active = True
 					else:
 						await bot.send_message(message.channel, "**A drop is already happening.**")
@@ -85,6 +90,9 @@ async def on_message(message):
 						embed=discord.Embed(title="**Drop lobby over!**", description="If you didnt get to join, stay tuned for the next one!", color=0xff060d)
 						await bot.send_message(droplobby_channel_object, " @here")
 						await bot.send_message(droplobby_channel_object, embed=embed)
+						
+						await bot.change_presence(game=discord.Game(name=game_not_active_str))
+						
 						drop_active = False
 					else:
 						await bot.send_message(message.channel, "**There is no current drop happening.**")
