@@ -12,6 +12,9 @@ rules_channel_id = str(os.environ.get("RULES_CHANNEL_ID"))
 announcements_channel_id = str(os.environ.get("ANNOUNCEMENTS_CHANNEL_ID"))
 commands_channel_id = str(os.environ.get("COMMANDS_CHANNEL_ID"))
 droplobby_channel_id = str(os.environ.get("DROPLOBBY_CHANNEL_ID"))
+logs_channel_id = str(os.environ.get("LOGS_CHANNEL_ID"))
+
+gmt_plus = 2
 
 game_not_active_str = "Drop Lobby NOT ACTIVE"
 game_active_str = "Drop Lobby ACTIVE"
@@ -52,6 +55,10 @@ async def on_message(message):
 	global status_message_objects
 	
 	droplobby_channel_object = bot.get_server(vortex_server_id).get_channel(droplobby_channel_id)
+	logs_channel_object = bot.get_server(vortex_server_id).get_channel(logs_channel_id)
+	
+	message_time = str(int(str(message.timestamp)[11:13]) + gmt_plus) + str(message.timestamp)[13:19]
+	message_date = "{0}/{1}/{2}".format(str(message.timestamp)[8:10], str(message.timestamp)[5:7], str(message.timestamp)[:4])
 	
 	if message.content == "ping":
 		await bot.send_message(message.channel, "pong")
@@ -107,5 +114,17 @@ async def on_message(message):
 				else:
 					embed=discord.Embed(title="**Drop lobby not active!**", description="Next one coming soon!", color=0xff060d)
 					await bot.send_message(message.channel, embed=embed)
+	
+	
+	
+			elif message.content[:7] == "!donate":
+				embed=discord.Embed(title="Donate Link", url="https://www.paypal.me/vortexdrops", description="Feel free to donate! Any amount would help.", color=0x154eb5)
+				await bot.send_message(message.author, embed=embed)
+				
+				
+				embed=discord.Embed(title="**{0} sent a donate request!**".format(message.author.display_name), color=0x154eb5)
+				embed.set_author(name="{0}#{1}".format(message.author.name, message.author.discriminator), icon_url=message.author.avatar_url)
+				embed.set_footer(text="{0} @ {1}".format(message_date, message_time))
+				await bot.send_message(logs_channel_object, embed=embed)
 	
 bot.run(token)
