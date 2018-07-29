@@ -6,6 +6,7 @@ import os
 
 token = str(os.environ.get("BOT_TOKEN"))
 vortex_server_id = str(os.environ.get("VORTEX_SERVER_ID"))
+socialclub_name = str(os.environ.get("SOCIALCLUB_NAME"))
 
 welcome_channel_id = str(os.environ.get("WELCOME_CHANNEL_ID"))
 rules_channel_id = str(os.environ.get("RULES_CHANNEL_ID"))
@@ -53,6 +54,8 @@ async def on_member_join(member):
 @bot.event
 async def on_message(message):
 	
+	global socialclub_name
+	
 	global status_commands
 	global drop_active
 	global status_message_objects
@@ -84,7 +87,7 @@ async def on_message(message):
 					if not drop_active:
 						await bot.send_message(droplobby_channel_object, "@here")
 						embed=discord.Embed(title="**Drop lobby started!**", color=0x62f400)
-						embed.add_field(name="To Join: ", value="-Add my SocialClub: **VORTEXDP**", inline=False)
+						embed.add_field(name="To Join: ", value="-Add my SocialClub: **{0}**".format(socialclub_name), inline=False)
 						status_message_objects.append(await bot.send_message(droplobby_channel_object, embed=embed))
 						
 						await bot.change_presence(game=discord.Game(name=game_active_str))
@@ -145,7 +148,7 @@ async def on_message(message):
 			if (message.content[:7] == "!status") or (message.content[:12] == "!drop status") or (status_ask):
 				if drop_active:
 					embed=discord.Embed(title="**Drop lobby currently active!**", color=0x1cc104)
-					embed.add_field(name="To Join: ", value="-Add my SocialClub: **VORTEXDP**", inline=False)
+					embed.add_field(name="To Join: ", value="-Add my SocialClub: **{0}**".format(socialclub_name), inline=False)
 					status_message_objects.append(await bot.send_message(message.channel, embed=embed))
 				else:
 					embed=discord.Embed(title="**Drop lobby not active!**", description="Next one coming soon!", color=0xff060d)
