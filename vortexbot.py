@@ -50,6 +50,13 @@ async def on_member_join(member):
 	announcements_channel_object = bot.get_server(vortex_server_id).get_channel(announcements_channel_id)
 	
 	await bot.send_message(welcome_channel_object, "Hello {0}, welcome to **Vortex Drops**. Make sure to read {1} and {2}!".format(member.mention, rules_channel_object.mention, announcements_channel_object.mention))
+
+@bot.event
+async def on_member_remove(member):
+	
+	welcome_channel_object = bot.get_server(vortex_server_id).get_channel(welcome_channel_id)
+	
+	await bot.send_message(welcome_channel_object, "{0}#{1} has left the server...".format(member.name, member.discriminator))
 	
 @bot.event
 async def on_message(message):
