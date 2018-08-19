@@ -1,6 +1,4 @@
 import discord
-from discord.ext import commands
-from discord.ext.commands import Bot
 import asyncio
 import os
 
@@ -30,8 +28,7 @@ drop_active = False
 
 destruction = False
 
-Client = discord.Client()
-bot = commands.Bot(command_prefix="!")
+bot = discord.Client()
 
 
 @bot.event
@@ -56,7 +53,7 @@ async def on_member_remove(member):
 	
 	welcome_channel_object = bot.get_server(vortex_server_id).get_channel(welcome_channel_id)
 	
-	await bot.send_message(welcome_channel_object, "{0}#{1} has left the server...".format(member.name, member.discriminator))
+	await bot.send_message(welcome_channel_object, "**{0}#{1}** has left the server...".format(member.name, member.discriminator))
 	
 @bot.event
 async def on_message(message):
