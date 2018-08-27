@@ -14,6 +14,9 @@ droplobby_channel_id = str(os.environ.get("DROPLOBBY_CHANNEL_ID"))
 logs_channel_id = str(os.environ.get("LOGS_CHANNEL_ID"))
 games_channel_id = str(os.environ.get("GAMES_CHANNEL_ID"))
 
+active_role_id = "483674192785440768"
+not_active_role_id = "483674514388025344"
+
 gmt_plus = 2
 
 game_not_active_str = "Drop Lobby NOT ACTIVE"
@@ -67,6 +70,8 @@ async def on_message(message):
 	global destruction
 	global member_hero
 	
+	global active_role_id
+	global not_active_role_id
 	
 	droplobby_channel_object = bot.get_server(vortex_server_id).get_channel(droplobby_channel_id)
 	logs_channel_object = bot.get_server(vortex_server_id).get_channel(logs_channel_id)
@@ -96,6 +101,13 @@ async def on_message(message):
 						
 						await bot.change_presence(game=discord.Game(name=game_active_str))
 						
+						for role_object in message.server.roles:
+							if role_object.id == active_role_id:
+								await bot.add_roles(message.server.get_member(bot.user.id), *[role_object])
+						for role_object in message.server.get_member(bot.user.id).roles:
+							if role_object.id == not_active_role_id:
+								await bot.remove_roles(message.server.get_member(bot.user.id), *[role_object])
+						
 						drop_active = True
 					else:
 						await bot.send_message(message.channel, "**A drop is already happening.**")
@@ -114,6 +126,13 @@ async def on_message(message):
 						await bot.send_message(droplobby_channel_object, embed=embed)
 						
 						await bot.change_presence(game=discord.Game(name=game_not_active_str))
+						
+						for role_object in message.server.roles:
+							if role_object.id == not_active_role_id:
+								await bot.add_roles(message.server.get_member(bot.user.id), *[role_object])
+						for role_object in message.server.get_member(bot.user.id).roles:
+							if role_object.id == active_role_id:
+								await bot.remove_roles(message.server.get_member(bot.user.id), *[role_object])
 						
 						drop_active = False
 					else:
